@@ -1,0 +1,69 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:PasswordGenerator.Avalonia.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" 
+		d:DesignWidth="400" d:DesignHeight="270"
+		Width="400" Height="270"
+		MinWidth="400" MinHeight="270"
+        x:Class="PasswordGenerator.Avalonia.Views.MainWindow"
+        Icon="/Assets/icon.ico"
+        Title="Password Generator">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<DockPanel Margin="12 6 12 12">
+		<Grid DockPanel.Dock="Top" Margin="0 0 0 1">
+			<Label HorizontalAlignment="Left"
+				   HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom"
+				   Classes="H1"
+				   Margin="1 0 0 0"
+				   Content="Generated Password"/>
+			
+			<Label HorizontalAlignment="Right"
+				   HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"
+				   Classes="H3"
+				   Margin="0 0 0 1"
+				   Content="{Binding Version}"/>
+		</Grid>
+		
+		<TextBox DockPanel.Dock="Top"
+				 IsReadOnly="True" IsEnabled="False" MaxLength="10"
+				 Watermark="No Password has been generated"
+				 Text="{Binding Password}"/>
+
+		<Label DockPanel.Dock="Top" Content="Length"
+			   Margin="0 6 0 6"
+			   Classes="H2"/>
+		<NumericUpDown DockPanel.Dock="Top" 
+					   Minimum="1"
+					   Value="{Binding Length}" Increment="1"
+					   FormatString="F0"/>
+		
+		<Label Content="Options" 
+			   DockPanel.Dock="Top"
+			   Margin="0 6 0 0"
+			   Classes="H2"/>
+		
+		<StackPanel DockPanel.Dock="Top"
+					VerticalAlignment="Stretch" 
+					HorizontalAlignment="Stretch">
+			<CheckBox Content="- Include Symbols" IsChecked="{Binding Symbols}"/>
+			<CheckBox Content="- Include Numbers" IsChecked="{Binding Numbers}"/>
+		</StackPanel>
+
+		<Grid VerticalAlignment="Bottom">
+			<Button HorizontalAlignment="Left"
+					Content="Copy"
+					Command="{Binding CopyCommand}"/>
+			
+			<Button HorizontalAlignment="Right"
+					IsEnabled="{Binding !IsActive}"
+					Content="Generate Password" Classes="CTA"
+					Command="{Binding GenerateCommand}"/>
+		</Grid>
+	</DockPanel>
+</Window>

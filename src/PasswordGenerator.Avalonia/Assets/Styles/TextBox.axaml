@@ -1,0 +1,50 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+			<TextBox Text="Test"/>
+        </Border>
+    </Design.PreviewWith>
+
+	<Style Selector="TextBox">
+		<Setter Property="Height" Value="32"/>
+
+		<Setter Property="Padding" Value="8 0 8 0"/>
+		<Setter Property="Margin" Value="0"/>
+
+		<Setter Property="VerticalContentAlignment" Value="Center"/>
+		<Setter Property="HorizontalContentAlignment" Value="Left"/>
+
+		<Setter Property="Background" Value="#FFFFFF"/>
+		<Setter Property="Foreground" Value="#181818"/>
+
+		<Setter Property="SelectionBrush" Value="{DynamicResource Accent}"/>
+		<Setter Property="TextWrapping" Value="NoWrap"/>
+		<Setter Property="FontSize" Value="14"/>
+
+		<Setter Property="CornerRadius" Value="5"/>
+		<Setter Property="BorderThickness" Value="2"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource Base}"/>
+	</Style>
+
+	<Style Selector="TextBox /template/ DockPanel#Part_InnerDockPanel">
+		<Setter Property="Margin" Value="0"/>
+	</Style>
+
+	<Style Selector="TextBox:pointerover /template/ Border#PART_BorderElement">
+		<Setter Property="BorderBrush" Value="{DynamicResource BaseLight}"/>
+	</Style>
+
+	<Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+		<Setter Property="BorderBrush" Value="{DynamicResource Accent}"/>
+	</Style>
+
+	<Style Selector="TextBox:disabled /template/ Border#PART_BorderElement">
+		<Setter Property="BorderBrush" Value="{DynamicResource BaseDisabledAlt}"/>
+		<Setter Property="Background" Value="{DynamicResource BaseDisabled}"/>
+	</Style>
+
+	<Style Selector="TextBox:disabled /template/ TextBlock#PART_Watermark, TextBox:disabled /template/ TextBlock#PART_FloatingWatermark">
+		<Setter Property="Foreground" Value="{DynamicResource BaseDisabledForegroundAlt}"/>
+	</Style>
+</Styles>

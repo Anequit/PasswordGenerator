@@ -1,0 +1,35 @@
+﻿<Style xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Design.PreviewWith>
+		<StackPanel Margin="20">
+			<Button Background="{DynamicResource BaseAccent}"/>
+		</StackPanel>
+	</Design.PreviewWith>
+	
+	<Style.Resources>
+		<Color x:Key="Base">#D6D6D6</Color>
+		<Color x:Key="BaseLight">#DFDFDF</Color>
+		<Color x:Key="BaseDark">#C7C7C7</Color>
+		<Color x:Key="BaseForeground">#181818</Color>
+		<Color x:Key="BaseForegroundLight">#282828</Color>
+		<Color x:Key="BaseForegroundDark">#151515</Color>
+		<Color x:Key="BaseDisabled">#C8C8C8</Color>
+		<Color x:Key="BaseDisabledAlt">#B8B8B8</Color>
+		<Color x:Key="BaseDisabledForeground">#484848</Color>
+		<Color x:Key="BaseDisabledForegroundAlt">#000000</Color>
+
+		<Color x:Key="Accent">#196EDE</Color>
+		<Color x:Key="AccentLight">#3281E8</Color>
+		<Color x:Key="AccentDark">#155EBD</Color>
+		<Color x:Key="AccentForeground">#FEFEFE</Color>
+		<Color x:Key="AccentForegroundLight">#FFFFFF</Color>
+		<Color x:Key="AccentForegroundDark">#FDFDFD</Color>
+		<Color x:Key="AccentDisabled">#C8C8C8</Color>
+		<Color x:Key="AccentDisabledAlt">#B8B8B8</Color>
+		<Color x:Key="AccentDisabledForeground">#484848</Color>
+
+		<Color x:Key="LabelH1">#181818</Color>
+		<Color x:Key="LabelH2">#383838</Color>
+		<Color x:Key="LabelH3">#555555</Color>
+	</Style.Resources>
+</Style>

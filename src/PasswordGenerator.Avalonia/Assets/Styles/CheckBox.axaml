@@ -1,0 +1,71 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Design.PreviewWith>
+		<Border Padding="20">
+			<CheckBox Content="Text"/>
+		</Border>
+	</Design.PreviewWith>
+
+	<Style Selector="CheckBox">
+		<Setter Property="HorizontalContentAlignment" Value="Left"/>
+		<Setter Property="HorizontalAlignment" Value="Stretch"/>
+		<Setter Property="Padding" Value="6 0 6 0"/>
+		<Setter Property="CornerRadius" Value="5"/>
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Border x:Name="PART_Border"
+						Background="{TemplateBinding Background}"
+						BorderBrush="{TemplateBinding BorderBrush}"
+						BorderThickness="{TemplateBinding BorderThickness}"
+						CornerRadius="{TemplateBinding CornerRadius}">
+
+					<DockPanel x:Name="RootGrid">
+						<ContentPresenter x:Name="ContentPresenter"
+										  ContentTemplate="{TemplateBinding ContentTemplate}"
+										  Content="{TemplateBinding Content}"
+										  Margin="{TemplateBinding Padding}"
+										  RecognizesAccessKey="True"
+										  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+										  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+										  DockPanel.Dock="Left"/>
+						
+						<Grid VerticalAlignment="Center" HorizontalAlignment="Right"
+							  Width="32" Height="32"
+							  DockPanel.Dock="Right">
+
+							<Border x:Name="NormalRectangle"
+									BorderThickness="{DynamicResource CheckBoxBorderThemeThickness}"
+									CornerRadius="{TemplateBinding CornerRadius}"
+									UseLayoutRounding="False"
+									Height="20"
+									Width="20"/>
+
+							<Viewbox UseLayoutRounding="False">
+								<Panel>
+									<Panel Height="20" Width="20" />
+									<Path x:Name="CheckGlyph" Stretch="Uniform" VerticalAlignment="Center" />
+								</Panel>
+							</Viewbox>
+						</Grid>
+					</DockPanel>
+				</Border>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+
+	<Style Selector="CheckBox:checked /template/ Border#NormalRectangle">
+		<Setter Property="Background" Value="{DynamicResource Accent}" />
+	</Style>
+
+	<Style Selector="CheckBox:checked:pressed /template/ Border#NormalRectangle">
+		<Setter Property="Background" Value="{DynamicResource AccentDark}" />
+	</Style>
+	
+	<Style Selector="CheckBox:checked:pointerover /template/ Border#NormalRectangle">
+		<Setter Property="BorderBrush" Value="{DynamicResource AccentDark}" />
+	</Style>
+
+	<Style Selector="CheckBox:pressed[IsChecked=false] /template/ Border#NormalRectangle">
+		<Setter Property="Background" Value="{DynamicResource BaseDark}" />
+	</Style>
+</Styles>

@@ -1,0 +1,60 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <Button Content="Generate"/>
+        </Border>
+    </Design.PreviewWith>
+
+	<Style Selector="Button">
+		<Setter Property="Background" Value="{DynamicResource Base}"/>
+		<Setter Property="Foreground" Value="{DynamicResource BaseForeground}"/>
+	</Style>
+
+	<Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{DynamicResource BaseLight}"/>
+		<Setter Property="TextBlock.Foreground" Value="{DynamicResource BaseForegroundLight}"/>
+
+		<Setter Property="RenderTransform" Value="None"/>
+	</Style>
+
+	<Style Selector="Button:pressed">
+		<Setter Property="RenderTransform" Value="scale(0.99)"/>
+	</Style>
+	
+	<Style Selector="Button:pressed /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{DynamicResource BaseDark}"/>
+		<Setter Property="TextBlock.Foreground" Value="{DynamicResource BaseForegroundDark}"/>
+	</Style>
+
+	<Style Selector="Button:disabled /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{DynamicResource BaseDisabled}"/>
+		<Setter Property="TextBlock.Foreground" Value="{DynamicResource BaseDisabledForeground}"/>
+	</Style>
+
+	<Style Selector="Button.CTA">
+		<Setter Property="Background" Value="{DynamicResource Accent}"/>
+		<Setter Property="Foreground" Value="{DynamicResource AccentForeground}"/>
+	</Style>
+
+	<Style Selector="Button.CTA:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{DynamicResource AccentLight}"/>
+		<Setter Property="TextBlock.Foreground" Value="{DynamicResource AccentForegroundLight}"/>
+
+		<Setter Property="RenderTransform" Value="None"/>
+	</Style>
+
+	<Style Selector="Button.CTA:pressed">
+		<Setter Property="RenderTransform" Value="scale(0.99)"/>
+	</Style>
+
+	<Style Selector="Button.CTA:pressed /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{DynamicResource AccentDark}"/>
+		<Setter Property="TextBlock.Foreground" Value="{DynamicResource AccentForegroundDark}"/>
+	</Style>
+
+	<Style Selector="Button.CTA:disabled /template/ ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{DynamicResource AccentDisabled}"/>
+		<Setter Property="TextBlock.Foreground" Value="{DynamicResource AccentDisabledForeground}"/>
+	</Style>
+</Styles>

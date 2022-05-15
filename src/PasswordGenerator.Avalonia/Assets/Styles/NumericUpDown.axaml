@@ -1,0 +1,63 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Design.PreviewWith>
+		<Border Padding="20">
+			<StackPanel Spacing="20">
+				<TextBox Width="200"/>
+				<NumericUpDown Width="200"/>
+			</StackPanel>
+		</Border>
+	</Design.PreviewWith>
+
+	<!-- Add Styles Here -->
+	<Style Selector="NumericUpDown">
+		<Setter Property="Value" Value="1"/>
+		<Setter Property="Minimum" Value="1"/>
+		<Setter Property="Increment" Value="1"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource Base}"/>
+		<Setter Property="ShowButtonSpinner" Value="False"/>
+		<Setter Property="CornerRadius" Value="5"/>
+		<Setter Property="Template">
+			<ControlTemplate>
+				<ButtonSpinner Name="PART_Spinner"
+							   Background="{TemplateBinding Background}"
+							   BorderThickness="2"
+							   BorderBrush="{TemplateBinding BorderBrush}"
+							   CornerRadius="{TemplateBinding CornerRadius}"
+							   Padding="0"
+							   MinWidth="0"
+							   HorizontalContentAlignment="Stretch"
+							   VerticalContentAlignment="Stretch"
+							   AllowSpin="{TemplateBinding AllowSpin}"
+							   ShowButtonSpinner="{TemplateBinding ShowButtonSpinner}"
+							   DataValidationErrors.Errors="{TemplateBinding (DataValidationErrors.Errors)}"
+							   ButtonSpinnerLocation="{TemplateBinding ButtonSpinnerLocation}">
+					<TextBox Name="PART_TextBox"
+							 Background="Transparent"
+							 BorderThickness="2"
+							 BorderBrush="{TemplateBinding BorderBrush}"
+							 Margin="-2"
+							 Padding="8 0 8 0"
+							 MinWidth="0"
+							 Foreground="{TemplateBinding Foreground}"
+							 FontSize="{TemplateBinding FontSize}"
+							 Watermark="{TemplateBinding Watermark}"
+							 IsReadOnly="{TemplateBinding IsReadOnly}"
+							 VerticalContentAlignment="Center"
+							 HorizontalContentAlignment="Left"
+							 Text="{TemplateBinding Text}"
+							 AcceptsReturn="False"
+							 TextWrapping="NoWrap" />
+				</ButtonSpinner>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+
+	<Style Selector="NumericUpDown:pointerover /template/ ButtonSpinner#PART_Spinner">
+		<Setter Property="BorderBrush" Value="{DynamicResource BaseLight}"/>
+	</Style>
+
+	<Style Selector="NumericUpDown:pressed, NumericUpDown:focus">
+		<Setter Property="BorderBrush" Value="{DynamicResource Accent}"/>
+	</Style>
+</Styles>
