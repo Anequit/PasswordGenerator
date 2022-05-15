@@ -3,7 +3,7 @@
 [![GitHub repo size](https://img.shields.io:/github/repo-size/Anequit/PasswordGenerator)](https://github.com/Anequit/PasswordGenerator/releases)
 
 ## About
-This tool is just a personal password generator that I made for my own uses. 
+This tool is just a personal password generator that I made for my own uses. To run this tool you will need [dotnet](https://dotnet.microsoft.com/en-us/download) installed.
 
 ## Supported Platforms
  * Windows 
