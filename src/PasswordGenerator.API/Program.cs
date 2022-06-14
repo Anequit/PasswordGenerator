@@ -25,10 +25,7 @@ public class Program
 
         app.MapControllers();
 
-        app.MapGet("/", () => 
-        {
-            Results.Redirect("/swagger/index.html");
-        });
+        app.MapGet("/", () => Results.Redirect("/swagger/index.html"));
 
         app.MapGet("/generate", (int length, bool? containsSymbols, bool? containsNumbers) =>
         {
