@@ -10,7 +10,7 @@ public class PartHelperTests
     [TestCase(11212, 12)]
     public void PartHelper_CorrectLength(int length, long expected)
     {
-        int result = PartHelper.InitializePartArray(length, 1000).Length;
+        int result = PartHelper.InitializePartArray(length).Length;
 
         Assert.That(result == expected);
     }

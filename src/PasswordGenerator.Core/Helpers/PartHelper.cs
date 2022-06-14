@@ -5,10 +5,9 @@ namespace PasswordGenerator.Core.Helpers;
 
 public static class PartHelper
 {
-    public static Part[] InitializePartArray(int length, int buffer = 1000)
+    public static Part[] InitializePartArray(int length)
     {
-        if(buffer <= 0)
-            throw new ArgumentOutOfRangeException(nameof(buffer));
+        int buffer = 1024;
 
         int amount = (int)Math.Ceiling((double)length / buffer);
 
