@@ -7,10 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["PasswordGenerator.API/PasswordGenerator.API.csproj", "PasswordGenerator.API/"]
-RUN dotnet restore "PasswordGenerator.API/PasswordGenerator.API.csproj"
+COPY ["src/PasswordGenerator.API/PasswordGenerator.API.csproj", "src/PasswordGenerator.API/"]
+RUN dotnet restore "src/PasswordGenerator.API/PasswordGenerator.API.csproj"
 COPY . .
-WORKDIR "/src/PasswordGenerator.API"
+WORKDIR "/src/src/PasswordGenerator.API"
 RUN dotnet build "PasswordGenerator.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
