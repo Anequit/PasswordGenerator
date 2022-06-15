@@ -1,4 +1,5 @@
 using PasswordGenerator.Core;
+using System.Net;
 
 namespace PasswordGenerator.API;
 
@@ -7,6 +8,8 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.WebHost.ConfigureKestrel(serverOptions => serverOptions.Listen(IPAddress.Any, Convert.ToInt32(Environment.GetEnvironmentVariable("PORT"))));
 
         builder.Services.AddControllers();
 
