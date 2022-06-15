@@ -1,6 +1,7 @@
 using Avalonia;
 using PasswordGenerator.Core;
 using ReactiveUI;
+using System.Net.Http;
 using System.Reactive;
 using System.Reflection;
 using System.Threading;
@@ -12,6 +13,7 @@ public class MainWindowViewModel : ReactiveObject
 {
     private string _password = string.Empty;
     private bool _isActive = false;
+    private HttpClient _client;
 
     public MainWindowViewModel()
     {
@@ -19,6 +21,8 @@ public class MainWindowViewModel : ReactiveObject
 
         GenerateCommand = ReactiveCommand.Create(Generate);
         CopyCommand = ReactiveCommand.Create(Copy);
+
+        _client = new HttpClient();
     }
 
     public string Version { get; } = string.Empty;
@@ -51,7 +55,7 @@ public class MainWindowViewModel : ReactiveObject
     private async void Generate()
     {
         IsActive = true;
-        Password = await Task.Run(() => Generator.GeneratePassword(Length, Symbols, Numbers));
+        Password = await _client.GetStringAsync($"https://anequit-passwordgenerator.herokuapp.com/generate?length={Length}&containsSymbols={Symbols}&containsNumbers={Numbers}");
     }
 
     private void Copy() => Application.Current?.Clipboard?.SetTextAsync(_password);
