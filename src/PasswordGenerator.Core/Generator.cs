@@ -1,8 +1,6 @@
 ﻿using PasswordGenerator.Core.DataModels;
 using PasswordGenerator.Core.Helpers;
 using System;
-using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,40 +8,42 @@ namespace PasswordGenerator.Core;
 
 public static class Generator
 {
+    const string _letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    const string _symbols = "!@#$%^&*()_+-=[]{}:;<>?/`~";
+    const string _numbers = "12345678990";
+
     public static string GeneratePassword(int length, bool symbols, bool numbers)
     {
-        StringBuilder sb = new StringBuilder(length);
+        string pool = BuildPool(symbols, numbers);
 
         Part[] parts = PartHelper.InitializePartArray(length);
 
         Parallel.ForEach(parts, part =>
         {
-            part.Data.Append(GeneratePassword());
-
             do
             {
-                if(symbols == false)
-                    part.Data = Extractor.ExtractSymbols(part.Data);
-
-                if(numbers == false)
-                    part.Data = Extractor.ExtractNumbers(part.Data);
-
-                if(part.ActualLength > part.DesiredLength)
-                    part.Data.Remove(part.DesiredLength, part.ActualLength - part.DesiredLength);
-
-                if(part.ActualLength < part.DesiredLength)
-                    part.Data.Append(GeneratePassword());
-
+                part.Data.Append(pool[Random.Shared.Next(0, pool.Length)]);
             } while(part.Data.Length != part.DesiredLength);
         });
 
-        foreach(Part part in parts)
+        StringBuilder sb = new StringBuilder(length);
+
+        foreach (Part part in parts)
             sb.Append(part.Data);
         
         return sb.ToString();
     }
 
-    private static string GeneratePassword() => Convert.ToBase64String(SHA256.HashData(GenerateGuidByteArray().Concat(GenerateGuidByteArray()).ToArray()));
+    private static string BuildPool(bool symbols, bool numbers)
+    {
+        string pool = _letters;
 
-    private static byte[] GenerateGuidByteArray() => Guid.NewGuid().ToByteArray();
+        if (symbols)
+            pool += _symbols;
+
+        if (numbers)
+            pool += _numbers;
+
+        return pool;
+    }
 }
