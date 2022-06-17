@@ -55,7 +55,7 @@ public class MainWindowViewModel : ReactiveObject
     private async void Generate()
     {
         IsActive = true;
-        Password = await _client.GetStringAsync($"https://anequit-passwordgenerator.herokuapp.com/generate?length={Length}&containsSymbols={Symbols}&containsNumbers={Numbers}");
+        Password = await Task.Run(() => Generator.GeneratePassword(Length, Symbols, Numbers));
     }
 
     private void Copy() => Application.Current?.Clipboard?.SetTextAsync(_password);
