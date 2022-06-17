@@ -7,7 +7,7 @@ public static class PartHelper
 {
     public static Part[] InitializePartArray(int length)
     {
-        int buffer = 1024;
+        int buffer = 1000;
 
         int amount = (int)Math.Ceiling((double)length / buffer);
 
