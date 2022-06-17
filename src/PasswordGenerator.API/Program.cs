@@ -32,8 +32,8 @@ public class Program
 
         app.MapGet("/generate", (int length, bool? containsSymbols, bool? containsNumbers) =>
         {
-            if(length > 2048)
-                return "Length is capped at 2048";
+            if(length > 10000)
+                return "Length is capped at 10000";
 
             else if(length <= 0)
                 return "Length must be at least 1";
