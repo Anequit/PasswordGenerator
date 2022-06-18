@@ -15,4 +15,15 @@ public class GeneratorTests
 
         Assert.That(result.Length == length);
     }
+
+    [TestCase(1032082, true, true)]
+    [TestCase(3123901, false, true)]
+    [TestCase(3123550, true, false)]
+    [TestCase(5555555, false, false)]
+    public async Task Generator_CorrectLengthAsync(int length, bool symbols, bool numbers)
+    {
+        string result = await Generator.GeneratePasswordAsync(length, symbols, numbers);
+
+        Assert.That(result.Length == length);
+    }
 }
