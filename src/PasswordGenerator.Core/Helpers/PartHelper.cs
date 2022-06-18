@@ -28,4 +28,13 @@ public static class PartHelper
 
         return parts;
     }
+
+    public static void CombinePartData(ref StringBuilder output, Part[] parts)
+    {
+        foreach(Part part in parts)
+        {
+            output.Append(part.Data);
+            part.Data.Clear();
+        }
+    }
 }
