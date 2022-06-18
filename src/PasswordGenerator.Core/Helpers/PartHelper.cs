@@ -1,5 +1,7 @@
 ﻿using PasswordGenerator.Core.DataModels;
 using System;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace PasswordGenerator.Core.Helpers;
 
@@ -15,7 +17,7 @@ public static class PartHelper
 
         for(int x = 0; x < amount; x++)
         {
-            parts[x] = new Part(buffer)
+            parts[x] = new Part()
             {
                 StartingBounds = x * buffer,
                 EndingBounds = (x * buffer) + buffer
@@ -25,5 +27,14 @@ public static class PartHelper
         parts[^1].EndingBounds = length;
 
         return parts;
+    }
+
+    public static void CombinePartData(ref StringBuilder output, Part[] parts)
+    {
+        foreach(Part part in parts)
+        {
+            output.Append(part.Data);
+            part.Data.Clear();
+        }
     }
 }

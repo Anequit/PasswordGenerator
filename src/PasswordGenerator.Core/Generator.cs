@@ -2,6 +2,7 @@
 using PasswordGenerator.Core.Helpers;
 using System;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PasswordGenerator.Core;
@@ -18,21 +19,19 @@ public static class Generator
 
         Part[] parts = PartHelper.InitializePartArray(length);
 
+        StringBuilder password = new StringBuilder(length);
+
         Parallel.ForEach(parts, part =>
         {
-            do
-            {
-                part.Data.Append(pool[Random.Shared.Next(0, pool.Length)]);
-            } while(part.Data.Length != part.DesiredLength);
+            GeneratePartData(ref part, pool);
         });
 
-        StringBuilder sb = new StringBuilder(length);
+        PartHelper.CombinePartData(ref password, parts);
 
-        foreach (Part part in parts)
-            sb.Append(part.Data);
-        
-        return sb.ToString();
+        return password.ToString();;
     }
+
+    public static async Task<string> GeneratePasswordAsync(int length, bool symbols, bool numbers) => await Task.Run(() => GeneratePassword(length, symbols, numbers));
 
     private static string BuildPool(bool symbols, bool numbers)
     {
@@ -45,5 +44,13 @@ public static class Generator
             pool += _numbers;
 
         return pool;
+    }
+
+    private static void GeneratePartData(ref Part part, string pool)
+    {
+        do
+        {
+            part.Data.Append(pool[Random.Shared.Next(0, pool.Length)]);
+        } while(part.Data.Length != part.DesiredLength);
     }
 }

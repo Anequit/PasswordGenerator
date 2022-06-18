@@ -1,10 +1,10 @@
 using Avalonia;
+using Avalonia.Threading;
 using PasswordGenerator.Core;
 using ReactiveUI;
-using System.Net.Http;
+using System;
 using System.Reactive;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace PasswordGenerator.Avalonia.ViewModels;
@@ -13,16 +13,13 @@ public class MainWindowViewModel : ReactiveObject
 {
     private string _password = string.Empty;
     private bool _isActive = false;
-    private HttpClient _client;
 
     public MainWindowViewModel()
     {
         Version = $"v{Assembly.GetEntryAssembly()?.GetName()?.Version?.ToString(3) ?? "?.?.?"}";
 
-        GenerateCommand = ReactiveCommand.Create(Generate);
+        GenerateCommand = ReactiveCommand.CreateFromTask(GenerateAsync);
         CopyCommand = ReactiveCommand.Create(Copy);
-
-        _client = new HttpClient();
     }
 
     public string Version { get; } = string.Empty;
@@ -41,7 +38,7 @@ public class MainWindowViewModel : ReactiveObject
 
     public string Password
     {
-        get => _password;
+        get => string.IsNullOrEmpty(_password) || _password.Length <= 100 ? _password : _password.Substring(0, 100);
         set
         {
             this.RaiseAndSetIfChanged(ref _password, value);
@@ -52,10 +49,10 @@ public class MainWindowViewModel : ReactiveObject
     public ReactiveCommand<Unit, Unit> GenerateCommand { get; }
     public ReactiveCommand<Unit, Unit> CopyCommand { get; }
 
-    private async void Generate()
+    private async Task GenerateAsync()
     {
         IsActive = true;
-        Password = await Task.Run(() => Generator.GeneratePassword(Length, Symbols, Numbers));
+        Password = await Generator.GeneratePasswordAsync(Length, Symbols, Numbers);
     }
 
     private void Copy() => Application.Current?.Clipboard?.SetTextAsync(_password);
