@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Threading;
 using PasswordGenerator.Core;
 using ReactiveUI;
+using System;
 using System.Reactive;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ public class MainWindowViewModel : ReactiveObject
 
     public string Password
     {
-        get => _password;
+        get => string.IsNullOrEmpty(_password) || _password.Length <= 100 ? _password : _password.Substring(0, 100);
         set
         {
             this.RaiseAndSetIfChanged(ref _password, value);
@@ -51,7 +52,6 @@ public class MainWindowViewModel : ReactiveObject
     private async Task GenerateAsync()
     {
         IsActive = true;
-
         Password = await Generator.GeneratePasswordAsync(Length, Symbols, Numbers);
     }
 
