@@ -27,12 +27,7 @@ public static class Generator
             } while(part.Data.Length != part.DesiredLength);        
         });
 
-        StringBuilder sb = new StringBuilder(length);
-
-        foreach(Part part in parts)
-            sb.Append(part.Data);
-
-        return sb.ToString();
+        return PartHelper.CombinePartData(parts).ToString();
     }
 
     public static async Task<string> GeneratePasswordAsync(int length, bool symbols, bool numbers)
@@ -52,12 +47,7 @@ public static class Generator
             }, ct);
         });
 
-        StringBuilder sb = new StringBuilder(length);
-
-        foreach (Part part in parts)
-            sb.Append(part.Data);
-        
-        return sb.ToString();
+        return PartHelper.CombinePartData(parts).ToString();
     }
 
     private static string BuildPool(bool symbols, bool numbers)
@@ -72,4 +62,5 @@ public static class Generator
 
         return pool;
     }
+
 }
