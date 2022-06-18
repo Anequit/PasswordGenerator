@@ -1,8 +1,10 @@
 using Avalonia;
+using Avalonia.Threading;
 using PasswordGenerator.Core;
 using ReactiveUI;
 using System.Reactive;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace PasswordGenerator.Avalonia.ViewModels;
 
@@ -15,7 +17,7 @@ public class MainWindowViewModel : ReactiveObject
     {
         Version = $"v{Assembly.GetEntryAssembly()?.GetName()?.Version?.ToString(3) ?? "?.?.?"}";
 
-        GenerateCommand = ReactiveCommand.Create(Generate);
+        GenerateCommand = ReactiveCommand.CreateFromTask(GenerateAsync);
         CopyCommand = ReactiveCommand.Create(Copy);
     }
 
@@ -46,10 +48,11 @@ public class MainWindowViewModel : ReactiveObject
     public ReactiveCommand<Unit, Unit> GenerateCommand { get; }
     public ReactiveCommand<Unit, Unit> CopyCommand { get; }
 
-    private async void Generate()
+    private async Task GenerateAsync()
     {
         IsActive = true;
-        Password = await Task.Run(() => Generator.GeneratePassword(Length, Symbols, Numbers));
+
+        Password = await Generator.GeneratePasswordAsync(Length, Symbols, Numbers);
     }
 
     private void Copy() => Application.Current?.Clipboard?.SetTextAsync(_password);
