@@ -2,7 +2,6 @@
 using PasswordGenerator.Core.Helpers;
 using System;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace PasswordGenerator.Core;
@@ -15,10 +14,13 @@ public static class Generator
 
     public static string GeneratePassword(int length, bool symbols, bool numbers)
     {
+        if(length > int.MaxValue)
+            return "Length too long";
+
         string pool = BuildPool(symbols, numbers);
 
         Part[] parts = PartHelper.InitializePartArray(length);
-
+        
         StringBuilder password = new StringBuilder(length);
 
         Parallel.ForEach(parts, part =>
