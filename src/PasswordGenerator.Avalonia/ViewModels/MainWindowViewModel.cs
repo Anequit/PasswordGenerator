@@ -1,11 +1,8 @@
 using Avalonia;
 using PasswordGenerator.Core;
 using ReactiveUI;
-using System.Net.Http;
 using System.Reactive;
 using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace PasswordGenerator.Avalonia.ViewModels;
 
