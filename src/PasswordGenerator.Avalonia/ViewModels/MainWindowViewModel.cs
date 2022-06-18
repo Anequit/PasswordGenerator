@@ -10,7 +10,6 @@ public class MainWindowViewModel : ReactiveObject
 {
     private string _password = string.Empty;
     private bool _isActive = false;
-    private HttpClient _client;
 
     public MainWindowViewModel()
     {
@@ -18,8 +17,6 @@ public class MainWindowViewModel : ReactiveObject
 
         GenerateCommand = ReactiveCommand.Create(Generate);
         CopyCommand = ReactiveCommand.Create(Copy);
-
-        _client = new HttpClient();
     }
 
     public string Version { get; } = string.Empty;
