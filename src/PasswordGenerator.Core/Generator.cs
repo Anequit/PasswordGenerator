@@ -19,36 +19,19 @@ public static class Generator
 
         Part[] parts = PartHelper.InitializePartArray(length);
 
+        StringBuilder password = new StringBuilder(length);
+
         Parallel.ForEach(parts, part =>
         {
-            do
-            {
-                part.Data.Append(pool[Random.Shared.Next(0, pool.Length)]);
-            } while(part.Data.Length != part.DesiredLength);        
+            GeneratePartData(ref part, pool);
         });
 
-        return PartHelper.CombinePartData(parts).ToString();
+        PartHelper.CombinePartData(ref password, parts);
+
+        return password.ToString();;
     }
 
-    public static async Task<string> GeneratePasswordAsync(int length, bool symbols, bool numbers)
-    {
-        string pool = BuildPool(symbols, numbers);
-
-        Part[] parts = PartHelper.InitializePartArray(length);
-
-        await Parallel.ForEachAsync(parts, async (part, ct) => 
-        {
-            await Task.Run(() =>
-            {
-                do
-                {
-                    part.Data.Append(pool[Random.Shared.Next(0, pool.Length)]);
-                } while(part.Data.Length != part.DesiredLength);
-            }, ct);
-        });
-
-        return PartHelper.CombinePartData(parts).ToString();
-    }
+    public static async Task<string> GeneratePasswordAsync(int length, bool symbols, bool numbers) => await Task.Run(() => GeneratePassword(length, symbols, numbers));
 
     private static string BuildPool(bool symbols, bool numbers)
     {
@@ -63,4 +46,11 @@ public static class Generator
         return pool;
     }
 
+    private static void GeneratePartData(ref Part part, string pool)
+    {
+        do
+        {
+            part.Data.Append(pool[Random.Shared.Next(0, pool.Length)]);
+        } while(part.Data.Length != part.DesiredLength);
+    }
 }
