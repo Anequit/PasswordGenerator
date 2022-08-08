@@ -1,3 +1,4 @@
+# Password Generator
 [![GitHub all releases](https://img.shields.io:/github/downloads/Anequit/PasswordGenerator/total)](https://github.com/Anequit/PasswordGenerator/releases)
 [![GitHub release (latest by date)](https://img.shields.io:/github/v/release/Anequit/PasswordGenerator)](https://github.com/Anequit/PasswordGenerator/releases)
 [![GitHub repo size](https://img.shields.io:/github/repo-size/Anequit/PasswordGenerator)](https://github.com/Anequit/PasswordGenerator/releases)
