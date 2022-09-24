@@ -1,5 +1,4 @@
 using Avalonia;
-using Avalonia.Threading;
 using PasswordGenerator.Core;
 using ReactiveUI;
 using System;
@@ -53,6 +52,7 @@ public class MainWindowViewModel : ReactiveObject
     {
         IsActive = true;
         Password = await Generator.GeneratePasswordAsync(Length, Symbols, Numbers);
+        GC.Collect();
     }
 
     private void Copy() => Application.Current?.Clipboard?.SetTextAsync(_password);

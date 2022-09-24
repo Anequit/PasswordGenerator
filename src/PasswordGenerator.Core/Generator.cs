@@ -1,6 +1,9 @@
 ﻿using PasswordGenerator.Core.DataModels;
+using PasswordGenerator.Core.Extensions;
 using PasswordGenerator.Core.Helpers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,16 +13,16 @@ public static class Generator
 {
     const string _letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     const string _symbols = "!@#$%^&*()_+-=[]{}:;<>?/`~";
-    const string _numbers = "12345678990";
+    const string _numbers = "1234567890";
 
-    public static string GeneratePassword(int length, bool symbols, bool numbers)
+    public static string GeneratePassword(in int length, in bool symbols, in bool numbers)
     {
         if(length > int.MaxValue)
             return "Length too long";
 
-        string pool = BuildPool(symbols, numbers);
+        char[] pool = BuildPool(symbols, numbers).ToCharArray();
 
-        Part[] parts = PartHelper.InitializePartArray(length);
+        List<Part> parts = PartHelper.InitializePartArray(length).ToList();
         
         StringBuilder password = new StringBuilder(length);
 
@@ -28,14 +31,14 @@ public static class Generator
             GeneratePartData(ref part, pool);
         });
 
-        PartHelper.CombinePartData(ref password, parts);
+        password.AppendPartList(ref parts);
 
-        return password.ToString();;
+        return password.ToString();
     }
 
     public static async Task<string> GeneratePasswordAsync(int length, bool symbols, bool numbers) => await Task.Run(() => GeneratePassword(length, symbols, numbers));
 
-    private static string BuildPool(bool symbols, bool numbers)
+    private static string BuildPool(in bool symbols, in bool numbers)
     {
         string pool = _letters;
 
@@ -48,11 +51,15 @@ public static class Generator
         return pool;
     }
 
-    private static void GeneratePartData(ref Part part, string pool)
+    private static void GeneratePartData(ref Part part, in char[] pool)
     {
+        StringBuilder builder = new StringBuilder(part.GetDesiredLength(), part.GetDesiredLength());
+
         do
         {
-            part.Data.Append(pool[Random.Shared.Next(0, pool.Length)]);
-        } while(part.Data.Length != part.DesiredLength);
+            builder.Append(pool[Random.Shared.Next(0, pool.Length)]);
+        } while(builder.Length < builder.MaxCapacity);
+
+        part.Data = builder.ToString();
     }
 }

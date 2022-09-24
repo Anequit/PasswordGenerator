@@ -1,14 +1,10 @@
-﻿using System.Text;
-
-namespace PasswordGenerator.Core.DataModels;
+﻿namespace PasswordGenerator.Core.DataModels;
 
 public class Part
 {
-    public Part() => Data = new StringBuilder(DesiredLength);
-
     public int StartingBounds { get; set; }
     public int EndingBounds { get; set; }
+    public string Data { get; set; } = string.Empty;
 
-    public int DesiredLength => EndingBounds - StartingBounds;
-    public StringBuilder Data { get; }
+    public int GetDesiredLength() => EndingBounds - StartingBounds;
 }
