@@ -7,10 +7,6 @@ namespace PasswordGenerator.Core;
 
 public static class Generator
 {
-    const string _letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    const string _symbols = "!@#$%^&*()_+-=[]{}:;<>?/`~";
-    const string _numbers = "1234567890";
-
     public static string GeneratePassword(in int length, in bool symbols, in bool numbers)
     {
         if(length > int.MaxValue)
@@ -35,13 +31,13 @@ public static class Generator
 
     private static char[] BuildPool(in bool symbols, in bool numbers)
     {
-        string pool = _letters;
+        string pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
         if (symbols)
-            pool += _symbols;
-        
+            pool += "!@#$%^&*()_+-=[]{}:;<>?/`~";
+
         if (numbers)
-            pool += _numbers;
+            pool += "1234567890";
 
         return pool.ToCharArray();
     }
