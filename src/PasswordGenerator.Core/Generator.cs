@@ -1,9 +1,5 @@
-﻿using PasswordGenerator.Core.DataModels;
-using PasswordGenerator.Core.Extensions;
-using PasswordGenerator.Core.Helpers;
+﻿using PasswordGenerator.Core.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,46 +16,45 @@ public static class Generator
         if(length > int.MaxValue)
             return "Length too long";
 
-        char[] pool = BuildPool(symbols, numbers).ToCharArray();
+        char[] pool = BuildPool(symbols, numbers);
 
-        List<Part> parts = PartHelper.InitializePartArray(length).ToList();
-        
-        StringBuilder password = new StringBuilder(length);
+        int[] partArray = PartHelper.InitializePartArray(length, 1024 * 1024);
 
-        Parallel.ForEach(parts, part =>
+        StringBuilder builder = new StringBuilder(length);
+
+        Parallel.ForEach(partArray, part =>
         {
-            GeneratePartData(ref part, pool);
+            lock(builder)
+                builder.Append(GeneratePartData(part, pool));
         });
 
-        password.AppendPartList(ref parts);
+        GC.Collect(); // Cleanup any allocated string builders from GeneratePartData
 
-        return password.ToString();
+        return builder.ToString();
     }
 
-    public static async Task<string> GeneratePasswordAsync(int length, bool symbols, bool numbers) => await Task.Run(() => GeneratePassword(length, symbols, numbers));
-
-    private static string BuildPool(in bool symbols, in bool numbers)
+    private static char[] BuildPool(in bool symbols, in bool numbers)
     {
         string pool = _letters;
 
         if (symbols)
             pool += _symbols;
-
+        
         if (numbers)
             pool += _numbers;
 
-        return pool;
+        return pool.ToCharArray();
     }
 
-    private static void GeneratePartData(ref Part part, in char[] pool)
+    private static string GeneratePartData(in int length, in char[] pool)
     {
-        StringBuilder builder = new StringBuilder(part.GetDesiredLength(), part.GetDesiredLength());
+        StringBuilder builder = new StringBuilder(length);
 
         do
         {
             builder.Append(pool[Random.Shared.Next(0, pool.Length)]);
-        } while(builder.Length < builder.MaxCapacity);
+        } while(builder.Length < length);
 
-        part.Data = builder.ToString();
+        return builder.ToString();
     }
 }

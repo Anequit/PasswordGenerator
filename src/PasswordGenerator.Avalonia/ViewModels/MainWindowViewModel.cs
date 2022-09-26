@@ -51,8 +51,8 @@ public class MainWindowViewModel : ReactiveObject
     private async Task GenerateAsync()
     {
         IsActive = true;
-        Password = await Generator.GeneratePasswordAsync(Length, Symbols, Numbers);
-        GC.Collect();
+        Password = string.Empty;
+        Password = await Task.Run(() => Generator.GeneratePassword(Length, Symbols, Numbers));
     }
 
     private void Copy() => Application.Current?.Clipboard?.SetTextAsync(_password);
