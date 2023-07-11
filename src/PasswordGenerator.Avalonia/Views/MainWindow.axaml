@@ -39,7 +39,7 @@
 			   Margin="0 6 0 6"
 			   Classes="H2"/>
 		<NumericUpDown DockPanel.Dock="Top" 
-					   Minimum="1" Maximum="2147483647"
+					   Minimum="1" Maximum="100000000"
 					   Value="{Binding Length}" Increment="1"
 					   FormatString="F0"/>
 		

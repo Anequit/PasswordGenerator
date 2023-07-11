@@ -9,7 +9,7 @@ public static class Generator
 {
     public static string GeneratePassword(in int length, in bool symbols, in bool numbers)
     {
-        if(length > int.MaxValue)
+        if(length > 100000000)
             return "Length too long";
 
         char[] pool = BuildPool(symbols, numbers);
