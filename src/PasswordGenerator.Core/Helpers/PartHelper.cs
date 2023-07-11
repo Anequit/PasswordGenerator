@@ -4,18 +4,20 @@ namespace PasswordGenerator.Core.Helpers;
 
 public static class PartHelper
 {
-    public static int[] InitializePartArray(in int length, in int partSize)
+    private static readonly int _partSize = 1048576;
+
+    public static int[] InitializePartArray(in int length)
     {
-        int amount = (int)Math.Ceiling((double)length / partSize);
+        int amount = (int)Math.Ceiling((double)length / _partSize);
 
         int[] parts = new int[amount];
 
         for(int x = 0; x < amount; x++)
         {
-            parts[x] = partSize;
+            parts[x] = _partSize;
         }
 
-        parts[^1] = length - ((amount - 1) * partSize);
+        parts[^1] = length - ((amount - 1) * _partSize);
 
         return parts;
     }
