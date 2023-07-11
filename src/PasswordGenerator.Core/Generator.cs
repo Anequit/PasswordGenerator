@@ -14,7 +14,7 @@ public static class Generator
 
         char[] pool = BuildPool(symbols, numbers);
 
-        int[] partArray = PartHelper.InitializePartArray(length, 1024 * 1024);
+        int[] partArray = PartHelper.InitializePartArray(length);
 
         StringBuilder builder = new StringBuilder(length);
 
