@@ -12,11 +12,8 @@ public static class PartHelper
 
         int[] parts = new int[amount];
 
-        for(int x = 0; x < amount; x++)
-        {
-            parts[x] = _partSize;
-        }
-
+        Array.Fill(parts, _partSize);
+        
         parts[^1] = length - ((amount - 1) * _partSize);
 
         return parts;
