@@ -15,13 +15,13 @@ public class MainWindowViewModel : ReactiveObject
 
     public MainWindowViewModel()
     {
-        Version = $"v{Assembly.GetEntryAssembly()?.GetName()?.Version?.ToString(3) ?? "?.?.?"}";
+        Version = $"v{Assembly.GetEntryAssembly()?.GetName().Version?.ToString(3) ?? "?.?.?"}";
 
         GenerateCommand = ReactiveCommand.CreateFromTask(GenerateAsync);
         CopyCommand = ReactiveCommand.Create(Copy);
     }
 
-    public string Version { get; } = string.Empty;
+    public string Version { get; }
 
     public bool Symbols { get; set; } = true;
 
