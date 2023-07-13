@@ -52,7 +52,14 @@ public class MainWindowViewModel : ReactiveObject
     {
         IsActive = true;
         Password = string.Empty;
+        
+        // This is done to clear up the previously generated password.
+        GC.Collect();
+        
         Password = await Task.Run(() => Generator.GeneratePassword(Length, Symbols, Numbers));
+        
+        // This is to clear up any allocations left over from the generator.
+        GC.Collect();
     }
 
     private void Copy() => Application.Current?.Clipboard?.SetTextAsync(_password);
